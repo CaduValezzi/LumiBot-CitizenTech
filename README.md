@@ -54,7 +54,7 @@ Protótipo acadêmico de monitoramento de iluminação em espaços públicos. Um
 
 ## Comandos de voz para demonstração
 
-Sempre iniciar com a palavra **“Lumi”**:
+Inicie com a palavra **“Lumi”** junto do comando ou diga apenas “Lumi” e aguarde a resposta antes de falar o comando:
 
 | Frase | Resultado |
 |---|---|
@@ -66,6 +66,31 @@ Sempre iniciar com a palavra **“Lumi”**:
 
 O comando de voz é reconhecido no notebook. O Python envia texto pela serial USB (9600 baud) para o Arduino, que executa a ação e responde. **A classificação de iluminação é atualmente por limiares calibráveis**; a **LLM é usada para gerar as orientações e o relatório**. Não há modelo TinyML treinado embarcado.
 
+### Todos os gatilhos aceitos
+
+Os gatilhos abaixo estão definidos em [`python/assistente.py`](python/assistente.py). Use uma palavra de ativação (`lumi`, `lumibote`, `lume` ou `lumebote`) junto do comando, por exemplo: “Lumi, ler agenda”. Também é possível dizer apenas “Lumi”, aguardar a resposta e então falar o comando.
+
+| Comando | Gatilhos de voz |
+|---|---|
+| Cadastrar evento | `cadastrar evento`, `cadastra um evento`, `cadastra evento`, `novo evento`, `criar evento` |
+| Ler agenda | `ler agenda`, `leia a agenda`, `ler minha agenda`, `mostrar agenda`, `quais são meus eventos` |
+| Limpar agenda | `limpar agenda`, `apagar a agenda`, `apagar agenda`, `limpar minha agenda`, `zerar agenda` |
+| Consultar hora | `que horas são`, `que horas é`, `me diz as horas`, `qual é a hora`, `que horas` |
+| Consultar data | `que dia é hoje`, `que dia é`, `qual o dia de hoje`, `qual a data de hoje`, `que dia` |
+| Calcular | `calcular` |
+| Reconhecer face | `reconhecer face`, `quem sou eu`, `reconheça minha face`, `reconhece minha face` |
+| Cadastrar rosto | `cadastrar rosto`, `cadastra um rosto`, `cadastra rosto`, `novo rosto`, `criar rosto` |
+| Consultar clima | `clima`, `previsão do tempo`, `previsao do tempo`, `qual o clima`, `vai chover` |
+| Ligar luz | `ligar luz`, `acender luz`, `acende a luz` |
+| Desligar luz | `desligar luz`, `apagar luz`, `apaga a luz` |
+| Cumprimentar | `olá`, `bom dia`, `boa tarde`, `boa noite`, `tudo bem` |
+| Verificar iluminação | `como está a luz`, `como está a iluminação`, `verificar iluminação`, `verificar a iluminação`, `verificar luz`, `analisar iluminação`, `iluminação` |
+| Gerar relatório | `relatório`, `relatorio` |
+
+A calculadora aceita `multiplicado por`, `dividido por`, `mais`, `menos`, `vezes`, `+`, `-`, `x`, `/` e `elevado`. Exemplo: “Lumi, calcular 2 mais 3”. Para consultar outra cidade, diga “Lumi, clima em São Paulo”. Para gerar um relatório, faça primeiro uma verificação de iluminação.
+
+Os gatilhos são procurados como trechos do texto reconhecido, e o primeiro comando correspondente na ordem da tabela é executado. Se nenhum gatilho corresponder, a pergunta é enviada à IA generativa (Groq).
+
 ## Protocolo serial
 
 | Comando | Resposta | Ação |
@@ -74,7 +99,6 @@ O comando de voz é reconhecido no notebook. O Python envia texto pela serial US
 | `VARRER` | `OK` | Giro de inspeção |
 | `LER` | `LDR:<valor>` | Média de dez leituras de A0 |
 | `LUZ` | `LDR:<valor>` e `NIVEL:<nivel>` | Teste completo na própria placa |
-| `VERDE:1` / `VERDE:0` | `OK` | Liga/desliga os dois olhos |
 | `ALERTA:1` / `ALERTA:0` | `OK` | Ativa/desativa LED de alerta |
 | `E:1` / `E:0`, `D:1` / `D:0` | `OK` | Controle independente dos olhos |
 
