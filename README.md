@@ -35,6 +35,30 @@ O LumiBot utiliza os seguintes componentes:
 
 O notebook também é utilizado como microfone, alto-falante e unidade de processamento da Inteligência Artificial.
 
+## Testes e validação do protótipo físico
+
+O LumiBot foi montado fisicamente utilizando Arduino Uno, sensor LDR, três LEDs e servo motor SG90.
+
+A montagem utiliza uma conexão USB com o notebook, responsável pela alimentação do Arduino e pela comunicação com o assistente virtual desenvolvido em Python.
+
+Os componentes eletrônicos foram integrados ao sistema de controle do robô, permitindo a execução das funcionalidades de monitoramento de luminosidade e interação com o usuário.
+
+### Funcionalidades a serem demonstradas
+
+| Funcionalidade | Comportamento esperado |
+|---|---|
+| Reconhecimento de voz | Identificação dos comandos iniciados pela palavra "Lumi" |
+| Cumprimento | Movimentação da cabeça, sinalização luminosa e resposta falada |
+| Sensor LDR | Leitura analógica das condições de luminosidade |
+| Monitoramento | Classificação das condições de iluminação |
+| Sinalização | Acionamento do LED de alerta |
+| Inteligência Artificial | Geração de orientações contextualizadas pela LLM |
+| Relatório | Registro das leituras e geração de relatório de manutenção |
+
+A montagem física e o funcionamento geral do protótipo foram confirmados.
+
+A calibração do sensor e os resultados individuais dos testes devem ser registrados conforme as medições realizadas no dispositivo.
+
 ## 2. Conexões elétricas
 
 ### Diagrama do circuito
@@ -119,6 +143,7 @@ Uma abertura traseira permite a passagem do cabo USB e o acesso aos componentes.
 
 A cabeça possui:
 
+- Um Led de alerta utilizado ao verificar baixa iluminação do local
 - Dois LEDs utilizados como olhos.
 - Sensor LDR posicionado na parte frontal.
 - Elementos decorativos que representam a expressão do robô.
