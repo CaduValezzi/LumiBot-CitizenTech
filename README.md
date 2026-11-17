@@ -119,5 +119,3 @@ Os gatilhos são procurados como trechos do texto reconhecido, e o primeiro coma
 - `arduino/LumeBot/LumeBot.ino`: firmware atualizado do Uno.
 - `documentacao/README-CP4-original.md`: documentação anterior para referência.
 - `requirements.txt`: bibliotecas Python.
-
-**Autor:** Cadu — projeto acadêmico LumiBot / CitizenTech.
