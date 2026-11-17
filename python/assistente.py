@@ -103,7 +103,7 @@ class AssistenteVirtual:
     # reconhecido. Acima disso, é tratado como "desconhecido".
     LIMITE_CONFIANCA_FACE = 4000
 
-    # Limiares do LDR (0-1023, mais luz = valor maior). Calibre no seu ambiente.
+    # Limiares do LDR (mais luz = valor menor). Calibre no seu ambiente.
     LIMIAR_ESCURO = 700
     LIMIAR_PENUMBRA = 500
 
@@ -139,7 +139,7 @@ class AssistenteVirtual:
     }
 
     def __init__(self, arquivo_agenda="agenda.txt", modelo_facial="classificador_eigen.yml",
-                 groq_api_key=None, porta_arduino=None, cidade_padrao="Santo André"):
+                 groq_api_key=None, porta_arduino=None, cidade_padrao="Santo André, São Paulo"):
         # --- Reconhecimento e síntese de voz ---
         self.reconhecedor = sr.Recognizer()
         # pause_threshold: quanto tempo de silêncio o reconhecedor tolera
@@ -147,7 +147,13 @@ class AssistenteVirtual:
         # evita cortar o comando quando você pausa naturalmente depois da
         # palavra de ativação (ex: "Lumi... cadastrar evento").
         self.reconhecedor.pause_threshold = 2.0
-        self.reconhecedor.non_speaking_duration = 0.5
+        self.reconhecedor.non_speaking_duration = 0.8
+        # Ajuste automático do limiar enquanto a pessoa fala: evita que pequenas
+        # variações de volume sejam confundidas com o fim da frase.
+        self.reconhecedor.dynamic_energy_threshold = True
+        self.reconhecedor.dynamic_energy_adjustment_damping = 0.15
+        self.reconhecedor.dynamic_energy_adjustment_ratio = 1.5
+        self.microfone_calibrado = False
 
         self.motor_voz_offline = pyttsx3.init()
         self.motor_voz_offline.setProperty("rate", 180)
@@ -212,10 +218,20 @@ class AssistenteVirtual:
         self.motor_voz_offline.say(texto)
         self.motor_voz_offline.runAndWait()
 
-    def ouvir(self, timeout=5, phrase_time_limit=12):
-        """Captura áudio do microfone e devolve o texto reconhecido em minúsculas (ou None)."""
+    def ouvir(self, timeout=8, phrase_time_limit=25):
+        """Ouve uma frase completa, preservando pausas naturais entre palavras.
+
+        timeout: espera máxima para a pessoa começar a falar.
+        phrase_time_limit: duração máxima APÓS o início da fala.
+        """
         with sr.Microphone() as microfone:
-            self.reconhecedor.adjust_for_ambient_noise(microfone, duration=1)
+            # Calibrar em toda tentativa altera o limiar mesmo com alguém falando,
+            # podendo tornar o reconhecimento menos confiável. Calibramos uma vez.
+            if not self.microfone_calibrado:
+                self.falar("Calibrando microfone: fique em silêncio por 2 segundos...")
+                self.reconhecedor.adjust_for_ambient_noise(microfone, duration=2)
+                self.microfone_calibrado = True
+                self.falar("Microfone pronto. Pode falar naturalmente.")
             try:
                 audio = self.reconhecedor.listen(microfone, timeout=timeout, phrase_time_limit=phrase_time_limit)
             except sr.WaitTimeoutError:
@@ -223,7 +239,7 @@ class AssistenteVirtual:
 
         try:
             texto = self.reconhecedor.recognize_google(audio, language="pt-BR")
-            return texto.lower()
+            return texto.strip().lower()
         except sr.UnknownValueError:
             return None
         except sr.RequestError as erro:
@@ -639,12 +655,12 @@ class AssistenteVirtual:
             self.falar("Não encontrei nenhum Arduino conectado.")
             return
         if comando == "ligar":
-            self._enviar_arduino("VERDE:1")
-            self._enviar_arduino("ALERTA:1")
+            self._enviar_arduino("E:1")
+            self._enviar_arduino("D:1")
             self.falar("Luz ligada.")
         else:
-            self._enviar_arduino("VERDE:0")
-            self._enviar_arduino("ALERTA:0")
+            self._enviar_arduino("E:0")
+            self._enviar_arduino("D:0")
             self.falar("Luz desligada.")
 
     # ------------------------------------------------------------------
@@ -688,8 +704,8 @@ class AssistenteVirtual:
 
         try:
             self.falar(self._perguntar_groq(
-                f"Leitura do sensor LDR: {valor} (escala 0-1023). Iluminação {nivel}. "
-                "Explique a situação para quem está no local e diga se é preciso acionar a manutenção.",
+                f"Leitura do sensor LDR: {valor}. Iluminação {nivel}. "
+                "Explique a situação para quem está no local e diga se é preciso acionar a manutenção. Explique que quando menor o valor do LDR, mais claro é o ambiente, valores próximos de 1000 indicam ambiente mais escuro. Lembre ao usuário que ele pode pedir um relatório de manutenção.",
                 sistema=(
                     "Você é o LumiBot, robô de monitoramento de iluminação em espaços "
                     "públicos (projeto CitizenTech). Responda em português, em no máximo 40 palavras, "
@@ -739,6 +755,15 @@ class AssistenteVirtual:
 
             if self.contem_ativacao(texto):
                 comando = self.extrair_comando(texto)
+                # Permite dizer primeiro "Lumi" e, após a resposta, completar
+                # a frase sem repetir o nome do robô.
+                if not comando:
+                    self.falar("Estou ouvindo. Pode falar seu comando.")
+                    comando = self.ouvir(timeout=10, phrase_time_limit=25)
+                    if not comando:
+                        self.falar("Não consegui ouvir o comando inteiro. Tente novamente.")
+                        continue
+                    print(f"[Comando]: {comando}")
                 self.processar_comando(comando)
             # sem a palavra de ativação, nenhuma ação é executada
 

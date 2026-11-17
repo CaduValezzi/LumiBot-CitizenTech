@@ -1,4 +1,3 @@
-// Robô CitizenTech — versão Tinkercad Circuits
 // Digite os comandos no Serial Monitor: OI, LUZ, LER, VARRER, ALERTA:1, ALERTA:0, VERDE:1, VERDE:0
 #include <Servo.h>
 
@@ -142,14 +141,6 @@ void processar(String cmd) {
     Serial.println("OK");
   } else if (cmd == "ALERTA:0") {
     digitalWrite(PIN_ALERT_LED, LOW);
-    Serial.println("OK");
-  } else if (cmd == "VERDE:1") {
-    digitalWrite(PIN_L_EYE, HIGH);
-    digitalWrite(PIN_R_EYE, HIGH);
-    Serial.println("OK");
-  } else if (cmd == "VERDE:0") {
-    digitalWrite(PIN_L_EYE, LOW);
-    digitalWrite(PIN_R_EYE, LOW);
     Serial.println("OK");
   } else if (cmd == "E:1") {
     digitalWrite(PIN_L_EYE, HIGH);
