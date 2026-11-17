@@ -1,0 +1,31 @@
+# Ambiente virtual
+venv/
+env/
+.venv/
+
+# Cache do Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Variáveis de ambiente / chaves de API
+.env
+
+# Dados gerados em tempo de execução (pessoais, não devem ir pro repositório)
+agenda.txt
+rostos/fotos/
+rostos/mapa_nomes.txt
+classificador_eigen.yml
+
+# Áudios temporários gerados pelo gTTS
+*.mp3
+
+# Arquivos de IDE / SO
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Api da ia utilizado no projeto
+api_AI.txt
+relatorio.txt

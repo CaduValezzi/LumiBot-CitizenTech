@@ -1,0 +1,10 @@
+SpeechRecognition
+PyAudio
+pyttsx3
+edge-tts
+pygame
+opencv-contrib-python==4.13.0.92
+numpy
+groq
+requests
+pyserial
