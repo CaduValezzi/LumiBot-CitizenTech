@@ -16,6 +16,7 @@ agenda.txt
 rostos/fotos/
 rostos/mapa_nomes.txt
 classificador_eigen.yml
+teste
 
 # Áudios temporários gerados pelo gTTS
 *.mp3
