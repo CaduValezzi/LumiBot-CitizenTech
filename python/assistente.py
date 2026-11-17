@@ -93,7 +93,29 @@ class AssistenteVirtual:
     """Encapsula toda a lógica do assistente: ouvir, decidir, agir e falar."""
 
     # Palavras que ativam a assistente (aceita o nome completo ou o apelido)
-    PALAVRAS_ATIVACAO = ["lumi", "lumibote", "lume", "lumebote"]
+    PALAVRAS_ATIVACAO = [
+    "lumi",
+    "lumibot",
+    "lumi bot",
+    "lumi bote",
+    "lumibote",
+    "lume",
+    "lumebot",
+    "lume bot",
+    "lume bote",
+    "lumebote",
+    "lumi robô",
+    "lume robô",
+    "lumi robo",
+    "lume robo",
+    "lumi robot",
+    "lume robot",
+    "lumi boti",
+    "lume boti",
+    "lumiboti",
+    "lumeboti",
+    ]
+
 
     # Voz usada pelo edge-tts (voz online principal). Vozes masculinas em pt-BR:
     # "pt-BR-AntonioNeural"; femininas: "pt-BR-FranciscaNeural".
