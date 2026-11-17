@@ -37,6 +37,18 @@ O notebook também é utilizado como microfone, alto-falante e unidade de proces
 
 ## 2. Conexões elétricas
 
+### Diagrama do circuito
+
+O diagrama abaixo apresenta a montagem eletrônica do LumiBot, utilizando Arduino Uno, protoboard, sensor LDR, três LEDs e servo motor SG90.
+
+![Diagrama de montagem eletrônica do LumiBot](imagens/LumiBot-CitizenTech.png)
+
+O Arduino Uno é conectado ao notebook por USB, permitindo a alimentação do circuito e a comunicação com o assistente virtual desenvolvido em Python.
+
+O servo SG90 é conectado ao pino digital D9 para receber os comandos de movimentação, enquanto o sensor LDR utiliza a entrada analógica A0 para realizar as leituras de luminosidade.
+
+Os três LEDs são utilizados para representar expressões e sinalizações visuais do robô.
+
 ### Arduino Uno
 
 | Componente | Conexão no Arduino |
