@@ -271,16 +271,30 @@ class AssistenteVirtual:
     # ------------------------------------------------------------------
     # Ativação e roteamento de comandos (item 1) - padrão Command
     # ------------------------------------------------------------------
+    
     def contem_ativacao(self, texto):
-        """Verifica se alguma palavra de ativação está presente no texto reconhecido."""
-        return any(palavra in texto for palavra in self.PALAVRAS_ATIVACAO)
+        return any(
+            re.search(r"\b" + re.escape(palavra) + r"\b", texto)
+            for palavra in self.PALAVRAS_ATIVACAO
+        )
 
     def extrair_comando(self, texto):
-        """Remove a palavra de ativação do texto, sobrando só o comando em si."""
         comando = texto
-        for palavra in sorted(self.PALAVRAS_ATIVACAO, key=len, reverse=True):
-            comando = comando.replace(palavra, "")
-        return comando.strip()
+
+        for palavra in sorted(
+            self.PALAVRAS_ATIVACAO,
+            key=len,
+            reverse=True
+        ):
+            comando = re.sub(
+                r"\b" + re.escape(palavra) + r"\b",
+                "",
+                comando,
+                flags=re.IGNORECASE
+            )
+
+        return comando.strip(" ,.!?")
+
 
     def _construir_comandos(self):
         """Monta a lista de comandos disponíveis (padrão Command): cada item

@@ -298,9 +298,25 @@ O LumiBot utiliza uma palavra de ativação para identificar quando o usuário d
 Palavras reconhecidas:
 
 - `lumi`
+- `lumibot`
+- `lumi bot`
+- `lumi bote`
 - `lumibote`
 - `lume`
+- `lumebot`
+- `lume bot`
+- `lume bote`
 - `lumebote`
+- `lumi robô`
+- `lume robô`
+- `lumi robo`
+- `lume robo`
+- `lumi robot`
+- `lume robot`
+- `lumi boti`
+- `lume boti`
+- `lumiboti`
+- `lumeboti`
 
 É possível falar a palavra de ativação junto com o comando ou utilizá-la separadamente.
 
