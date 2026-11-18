@@ -554,5 +554,3 @@ O projeto representa uma aplicação acadêmica de tecnologias inteligentes para
 ---
 
 **Projeto acadêmico — LumiBot CitizenTech**
-
-**Repositório:** https://github.com/CaduValezzi/LumiBot-CitizenTech
