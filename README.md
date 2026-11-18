@@ -17,6 +17,9 @@ O projeto busca contribuir para a identificação de condições inadequadas de 
 * RM98215 | Gabriel Antony Cadima Ciziks 
 * ⁠RM98169 | Lucca Sabatini Tambellini
 * RM98209 | Victor Nuzzi
+
+## Vídeo de apresentação
+[https://youtu.be/0RGSGeCix74](https://youtu.be/0RGSGeCix74)
 ---
 
 ## 1. Materiais e componentes
