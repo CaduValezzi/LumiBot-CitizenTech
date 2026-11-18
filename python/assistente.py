@@ -1,39 +1,3 @@
-"""
-Assistente Virtual "LumiBot"
-=======================================
-Projeto acadêmico de assistente virtual por voz, inspirado no
-Google Assistente / Alexa.
-
-Funcionalidades implementadas:
- 1. Ativação por palavra-chave ("LumiBot" ou apenas "Lumi")
- 2. Cadastro de evento na agenda, com dia e horário (agenda.txt)
- 3. Leitura da agenda (nome do evento, dia e horário)
- 4. Consulta do horário atual
- 5. Consulta da data atual
- 6. Calculadora por voz (adição, subtração, multiplicação, divisão)
- 7. Reconhecimento facial (OpenCV EigenFaceRecognizer), sem abrir janela de câmera
- 8. Limpeza da agenda (sem apagar o arquivo)
- 9. Integração com IA generativa (Groq) como fallback para perguntas abertas
- 10. Extras (desafio do grupo):
-       - Previsão do tempo por voz
-       - Controle de um dispositivo (LED) via Arduino
- 11. Robô CitizenTech (Arduino Uno + LDR + servo + LEDs):
-       - Cumprimento: LED verde + servo acena
-       - Verificação da iluminação: servo varre, LDR lê, LED vermelho alerta,
-         Groq explica a situação por voz
-       - Relatório de manutenção gerado pela Groq (relatorio.txt)
-
-Qualquer comando só é aceito depois que a palavra de ativação é reconhecida
-na mesma fala. Caso contrário, o texto reconhecido é apenas exibido no
-console, sem nenhuma ação.
-
-Arquitetura: os comandos de voz são modelados com o padrão Command (classe
-Comando): cada um encapsula seus gatilhos de fala e a ação a executar. O
-roteamento em AssistenteVirtual.processar_comando() percorre essa lista em
-vez de uma cadeia grande de if/elif, o que deixa mais simples adicionar,
-remover ou reorganizar comandos.
-"""
-
 import asyncio
 import os
 import re

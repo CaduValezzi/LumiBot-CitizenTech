@@ -12,6 +12,11 @@ O projeto busca contribuir para a identificação de condições inadequadas de 
 
 > **Estado do projeto:** integração de software desenvolvida. As leituras do sensor são indicativas e dependem de calibração. O LumiBot é um protótipo acadêmico e não substitui equipamentos profissionais de medição de luminosidade.
 
+## Integrantes
+* RM551059 | Cassio Valezzi  
+* RM98215 | Gabriel Antony Cadima Ciziks 
+* ⁠RM98169 | Lucca Sabatini Tambellini
+* RM98209 | Victor Nuzzi
 ---
 
 ## 1. Materiais e componentes
